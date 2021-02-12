@@ -1,10 +1,30 @@
 import React from 'react';
 import useFirestore from '../hooks/useFirestore';
 import { motion } from 'framer-motion';
+import {
+  projectStorage,
+  projectFirestore,
+  timestamp,
+} from '../firebase/config';
 
 const ImageGrid = ({ setSelectedImg }) => {
   const { docs } = useFirestore('images');
 
+  const handleDelete = (e, doc) => {
+    e.stopPropagation();
+    projectFirestore
+      .collection('images')
+      .doc(doc.id)
+      .delete()
+      .then(() => console.log('doc deleted from FireStore'))
+      .catch((err) => console.log(err));
+
+    const storageRef = projectStorage.ref(doc.fileName);
+    storageRef
+      .delete()
+      .then(() => console.log('File deleted from Bucket'))
+      .catch((err) => console.warn(err));
+  };
   return (
     <div className='img-grid'>
       {docs &&
@@ -23,7 +43,7 @@ const ImageGrid = ({ setSelectedImg }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             />
-            <button>Delete</button>
+            <button onClick={(e) => handleDelete(e, doc)}>Delete</button>
           </motion.div>
         ))}
     </div>
