@@ -4,8 +4,9 @@ import {
   projectFirestore,
   timestamp,
 } from '../firebase/config';
+import toast from 'react-hot-toast';
 
-const useStorage = (file) => {
+const useAddStorage = (file) => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
@@ -22,13 +23,18 @@ const useStorage = (file) => {
         setProgress(percentage);
       },
       (err) => {
-        setError(err);
+        setError(err.message);
       },
       async () => {
-        const url = await storageRef.getDownloadURL();
-        const createdAt = timestamp();
-        await collectionRef.add({ url, createdAt, fileName: file.name });
-        setUrl(url);
+        try {
+          const url = await storageRef.getDownloadURL();
+          const createdAt = timestamp();
+          await collectionRef.add({ url, createdAt, fileName: file.name });
+          setUrl(url);
+          toast.success(`Image ${file.name} added to Gallery!`);
+        } catch (err) {
+          setError(err.message);
+        }
       }
     );
   }, [file]);
@@ -36,4 +42,4 @@ const useStorage = (file) => {
   return { progress, url, error };
 };
 
-export default useStorage;
+export default useAddStorage;

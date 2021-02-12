@@ -1,30 +1,16 @@
 import React from 'react';
-import useFirestore from '../hooks/useFirestore';
+import useSubFirestore from '../hooks/useSubFirestore';
+import useDelStorage from '../hooks/useDelStorage';
 import { motion } from 'framer-motion';
-import {
-  projectStorage,
-  projectFirestore,
-  timestamp,
-} from '../firebase/config';
+import toast from 'react-hot-toast';
 
 const ImageGrid = ({ setSelectedImg }) => {
-  const { docs } = useFirestore('images');
+  const { docs } = useSubFirestore('images');
+  const [handleDelete, error] = useDelStorage();
+  if (error) {
+    toast.error(error);
+  }
 
-  const handleDelete = (e, doc) => {
-    e.stopPropagation();
-    projectFirestore
-      .collection('images')
-      .doc(doc.id)
-      .delete()
-      .then(() => console.log('doc deleted from FireStore'))
-      .catch((err) => console.log(err));
-
-    const storageRef = projectStorage.ref(doc.fileName);
-    storageRef
-      .delete()
-      .then(() => console.log('File deleted from Bucket'))
-      .catch((err) => console.warn(err));
-  };
   return (
     <div className='img-grid'>
       {docs &&

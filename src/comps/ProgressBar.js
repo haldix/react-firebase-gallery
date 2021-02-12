@@ -1,22 +1,27 @@
 import React, { useEffect } from 'react';
-import useStorage from '../hooks/useStorage';
+import useAddStorage from '../hooks/useAddStorage';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 const ProgressBar = ({ file, setFile }) => {
-  const { progress, url } = useStorage(file);
+  const { progress, url, error } = useAddStorage(file);
 
   useEffect(() => {
     if (url) {
       setFile(null);
     }
-  }, [url, setFile]);
+    if (error) {
+      toast.error(error);
+    }
+  }, [url, setFile, error]);
 
   return (
-    <motion.div className="progress-bar"
+    <motion.div
+      className='progress-bar'
       initial={{ width: 0 }}
       animate={{ width: progress + '%' }}
     ></motion.div>
   );
-} 
+};
 
 export default ProgressBar;
