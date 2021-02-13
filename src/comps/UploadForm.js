@@ -20,23 +20,25 @@ const UploadForm = ({ handleEdit }) => {
   };
 
   return (
-    <form>
-      <div className='btn-cont'>
-        <label>
-          <input type='file' onChange={handleChange} />
-          <span>+</span>
-        </label>
-        <button className='btn-edit' type='button' onClick={handleEdit}>
-          Edit Gallery
-        </button>
-      </div>
+    <div className='upload'>
+      <form>
+        <div className='btn-cont'>
+          <label>
+            <input type='file' onChange={handleChange} />
+            <span>+</span>
+          </label>
+          <button className='btn-edit' type='button' onClick={handleEdit}>
+            Edit Gallery
+          </button>
+        </div>
 
-      <div className='output'>
-        {error && <div className='error'>{error}</div>}
-        {file && <div>{file.name}</div>}
-        {file && <ProgressBar file={file} setFile={setFile} />}
-      </div>
-    </form>
+        <div className='output'>
+          {error && <div className='error'>{error}</div>}
+          {file && <div>{file.name}</div>}
+          {file && <ProgressBar file={file} setFile={setFile} />}
+        </div>
+      </form>
+    </div>
   );
 };
 

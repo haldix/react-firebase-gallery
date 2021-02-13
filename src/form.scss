@@ -1,0 +1,38 @@
+.signup {
+  h2 {
+    text-align: center;
+  }
+  form {
+    padding: 1.5rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    background-color: rgb(235, 235, 235);
+    color: #000;
+  }
+  label {
+    display: block;
+  }
+  input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border: solid 2px #333;
+    padding: 0.3em;
+    border-radius: 3px;
+
+    &:focus {
+      box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
+    }
+  }
+  button {
+    border: solid 2px #000;
+    border-radius: 3px;
+    font-weight: bold;
+    padding: 0.3em;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: #c2c2c2;
+    }
+  }
+}
