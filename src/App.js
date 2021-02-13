@@ -7,12 +7,19 @@ import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
+  const [edit, setEdit] = useState(false);
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    console.log('Edit');
+    setEdit(!edit);
+  };
 
   return (
     <div className='App'>
       <Title />
-      <UploadForm />
-      <ImageGrid setSelectedImg={setSelectedImg} />
+      <UploadForm handleEdit={handleEdit} />
+      <ImageGrid edit={edit} setSelectedImg={setSelectedImg} />
       <Toaster position='bottom-center' />
       {selectedImg && (
         <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg} />

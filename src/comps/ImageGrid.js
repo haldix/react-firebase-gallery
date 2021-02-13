@@ -4,7 +4,7 @@ import useDelStorage from '../hooks/useDelStorage';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
-const ImageGrid = ({ setSelectedImg }) => {
+const ImageGrid = ({ edit, setSelectedImg }) => {
   const { docs } = useSubFirestore('images');
   const [handleDelete, error] = useDelStorage();
   if (error) {
@@ -29,7 +29,12 @@ const ImageGrid = ({ setSelectedImg }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             />
-            <button onClick={(e) => handleDelete(e, doc)}>Delete</button>
+            <button
+              className={`btn-del ${edit && 'show'}`}
+              onClick={(e) => handleDelete(e, doc)}
+            >
+              Delete
+            </button>
           </motion.div>
         ))}
     </div>
