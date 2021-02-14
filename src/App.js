@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Modal from './comps/Modal';
 import { Toaster } from 'react-hot-toast';
+import Home from './pages/Home';
 import Signup from './comps/Signup';
-import Signin from './comps/Signin';
+import Login from './comps/Login';
 import Gallery from './pages/Gallery';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -21,8 +22,9 @@ function App() {
       <AuthProvider>
         <Router>
           <Switch>
+            <Route exact path='/' component={Home} />
             <Route exact path='/signup' component={Signup} />
-            <Route exact path='/signin' component={Signin} />
+            <Route exact path='/login' component={Login} />
             <Route path='/gallery'>
               <Gallery
                 handleEdit={handleEdit}

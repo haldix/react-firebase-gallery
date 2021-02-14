@@ -6,11 +6,10 @@ import toast from 'react-hot-toast';
 const initValues = {
   email: '',
   password: '',
-  confirmPassword: '',
 };
 
-const Signup = () => {
-  const { signup } = useAuth();
+const Login = () => {
+  const { login } = useAuth();
   const [values, setValues] = useState(initValues);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -29,26 +28,22 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (values.password !== values.confirmPassword) {
-      console.log('Mismatch pws');
-      return setError('Passwords do not match.');
-    }
     try {
       setError('');
       setLoading(true);
-      await signup(values.email, values.password);
+      await login(values.email, values.password);
       setValues(initValues);
+      toast.success('Logged in successfully!');
       history.push('/gallery');
-      toast.success('Account created successfully!');
     } catch {
-      setError('Failed to create an account');
+      setError('Failed to log in.');
     }
     setLoading(false);
   };
 
   return (
     <div className='signup'>
-      <h2>Sign Up</h2>
+      <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
         <div className='input-group'>
           <label htmlFor='email'>Email</label>
@@ -70,25 +65,15 @@ const Signup = () => {
             onChange={handleChange}
           />
         </div>
-        <div className='input-group'>
-          <label htmlFor='confirm-password'>Password</label>
-          <input
-            type='password'
-            name='confirmPassword'
-            value={values.confirmPassword}
-            required
-            onChange={handleChange}
-          />
-        </div>
         <button className='btn-submit' type='submit' disabled={loading}>
-          Sign Up
+          Log in
         </button>
       </form>
-      <div>
-        Already have an account? <Link to='/login'>Log in</Link>
+      <div className='form-link'>
+        Need an account? <Link to='/signup'>Sign Up</Link>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Login;
