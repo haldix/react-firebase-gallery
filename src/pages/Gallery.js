@@ -1,13 +1,14 @@
 import React from 'react';
 import ImageGrid from '../comps/ImageGrid';
 import Modal from '../comps/Modal';
-import Title from '../comps/Title';
+import Navbar from '../comps/Navbar';
 import UploadForm from '../comps/UploadForm';
 
 const Gallery = ({ handleEdit, edit, selectedImg, setSelectedImg }) => {
   return (
     <div>
-      <Title />
+      <Navbar />
+      <h1 className='title'>Your Gallery</h1>
       <UploadForm handleEdit={handleEdit} />
       <ImageGrid edit={edit} setSelectedImg={setSelectedImg} />
       {selectedImg && (

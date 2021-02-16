@@ -43,3 +43,22 @@
     }
   }
 }
+
+.delete-cont {
+  text-align: center;
+  padding: 1.5rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  background-color: rgb(235, 235, 235);
+}
+
+.btn-del-user {
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #f00;
+  color: #fff;
+
+  &:hover {
+    background-color: rgb(212, 0, 0) !important;
+  }
+}

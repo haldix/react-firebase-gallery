@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
 
 :root {
-  --primary: #f0d7d6;
-  --secondary: #a3a2a2;
-  --error: #ff4a4a;
+  --primary: #f0e4e4;
+  --secondary: #d4d1d1;
 }
 
 /* base styles & title */
@@ -22,6 +21,7 @@ body {
   letter-spacing: 2px;
   font-weight: normal;
 }
+h1,
 .title h2,
 .title p {
   text-align: center;
@@ -76,9 +76,6 @@ body {
   .output {
     height: 60px;
     font-size: 0.8rem;
-  }
-  .error {
-    color: var(--error);
   }
 }
 

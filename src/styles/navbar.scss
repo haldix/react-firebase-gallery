@@ -4,4 +4,29 @@
     display: flex;
     justify-content: space-around;
   }
+  a {
+    color: var(--secondary);
+    text-decoration: none;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+      color: var(--primary);
+    }
+  }
+  button {
+    background-color: transparent;
+    border: 0;
+    color: var(--secondary);
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      color: var(--primary);
+    }
+  }
+  .selected {
+    text-decoration: underline;
+  }
 }

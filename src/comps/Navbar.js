@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import '../styles/navbar.scss';
 
@@ -30,25 +30,38 @@ const Navbar = () => {
     <div className='navbar'>
       <ul>
         <li>
-          <Link to='/'>Home</Link>
+          <NavLink exact to='/' activeClassName='selected'>
+            Home
+          </NavLink>
         </li>
         {!currentUser && (
           <>
             <li>
-              <Link to='/signup'>Sign Up</Link>
+              <NavLink exact to='/signup' activeClassName='selected'>
+                Sign Up
+              </NavLink>
             </li>
             <li>
-              <Link to='/login'>Log In</Link>
+              <NavLink to='/login' activeClassName='selected'>
+                Log In
+              </NavLink>
             </li>
           </>
         )}
         {currentUser && (
           <>
             <li>
-              <button onClick={handleLogout}>Log Out</button>
+              <NavLink exact to='/gallery' activeClassName='selected'>
+                Gallery
+              </NavLink>
             </li>
             <li>
-              <Link to='/profile'>Profile</Link>
+              <NavLink exact to='/profile' activeClassName='selected'>
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <button onClick={handleLogout}>Log Out</button>
             </li>
           </>
         )}

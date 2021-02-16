@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
-  const { currentUser, updateEmail, updatePassword } = useAuth();
+  const { currentUser, updateEmail, updatePassword, deleteUser } = useAuth();
   const initValues = {
     email: currentUser.email,
     password: '',
@@ -56,6 +56,20 @@ const Profile = () => {
     }
   };
 
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+    const conf = prompt('Type delete to confirm.');
+    if (conf !== 'delete') return;
+    try {
+      await deleteUser();
+      history.push('/');
+      toast.success('Account deleted.');
+    } catch (err) {
+      console.log(err);
+      setError('Unable to delete account.');
+    }
+  };
+
   return (
     <div className='signup'>
       <h2>Update Profile</h2>
@@ -94,6 +108,11 @@ const Profile = () => {
           Update
         </button>
       </form>
+      <div className='delete-cont'>
+        <button className='btn-del-user' onClick={handleDelete}>
+          Delete Your Account
+        </button>
+      </div>
       <div className='form-link'>
         <Link to='/'>Cancel</Link>
       </div>

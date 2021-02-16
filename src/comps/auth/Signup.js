@@ -36,13 +36,13 @@ const Signup = () => {
       setError('');
       setLoading(true);
       await signup(values.email, values.password);
-      setValues(initValues);
-      history.push('/gallery');
+      setLoading(false);
+      history.push('/');
       toast.success('Account created successfully!');
     } catch {
+      setLoading(false);
       setError('Failed to create an account');
     }
-    setLoading(false);
   };
 
   return (

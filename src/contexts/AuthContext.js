@@ -35,6 +35,10 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
+  function deleteUser() {
+    return currentUser.delete();
+  }
+
   useEffect(() => {
     return auth.onAuthStateChanged((user) => {
       setCurrentuser(user);
@@ -50,6 +54,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
+    deleteUser,
   };
 
   return (
