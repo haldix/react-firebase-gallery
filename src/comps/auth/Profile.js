@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import '../styles/form.scss';
-import { useAuth } from '../contexts/AuthContext';
+import '../../styles/form.scss';
+import { useAuth } from '../../contexts/AuthContext';
 import toast from 'react-hot-toast';
-const initValues = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
 
-const Signup = () => {
-  const { signup } = useAuth();
+const Profile = () => {
+  const { currentUser, updateEmail, updatePassword } = useAuth();
+  const initValues = {
+    email: currentUser.email,
+    password: '',
+    confirmPassword: '',
+  };
   const [values, setValues] = useState(initValues);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,25 +30,35 @@ const Signup = () => {
     e.preventDefault();
 
     if (values.password !== values.confirmPassword) {
-      console.log('Mismatch pws');
-      return setError('Passwords do not match.');
+      return toast.error('Passwords do not match.');
     }
     try {
       setError('');
       setLoading(true);
-      await signup(values.email, values.password);
+
+      const promises = [];
+      if (values.email !== currentUser.email) {
+        promises.push(updateEmail(values.email));
+      }
+
+      if (values.password) {
+        promises.push(updatePassword(values.password));
+      }
+
+      await Promise.all(promises);
       setValues(initValues);
-      history.push('/gallery');
-      toast.success('Account created successfully!');
+      history.push('/');
+      toast.success('Account updated successfully!');
+      setLoading(false);
     } catch {
-      setError('Failed to create an account');
+      setError('Failed to update account');
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
     <div className='signup'>
-      <h2>Sign Up</h2>
+      <h2>Update Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className='input-group'>
           <label htmlFor='email'>Email</label>
@@ -66,7 +76,7 @@ const Signup = () => {
             type='password'
             name='password'
             value={values.password}
-            required
+            placeholder='Leave blank to keep the same'
             onChange={handleChange}
           />
         </div>
@@ -76,19 +86,19 @@ const Signup = () => {
             type='password'
             name='confirmPassword'
             value={values.confirmPassword}
-            required
+            placeholder='Leave blank to keep the same'
             onChange={handleChange}
           />
         </div>
         <button className='btn-submit' type='submit' disabled={loading}>
-          Sign Up
+          Update
         </button>
       </form>
-      <div>
-        Already have an account? <Link to='/login'>Log in</Link>
+      <div className='form-link'>
+        <Link to='/'>Cancel</Link>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Profile;

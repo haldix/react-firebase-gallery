@@ -8,7 +8,7 @@ const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const [error, seterror] = useState();
   const history = useHistory();
-  console.log('user', currentUser);
+
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -43,9 +43,14 @@ const Navbar = () => {
           </>
         )}
         {currentUser && (
-          <li>
-            <button onClick={handleLogout}>Log Out</button>
-          </li>
+          <>
+            <li>
+              <button onClick={handleLogout}>Log Out</button>
+            </li>
+            <li>
+              <Link to='/profile'>Profile</Link>
+            </li>
+          </>
         )}
       </ul>
     </div>

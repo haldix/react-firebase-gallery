@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import '../styles/form.scss';
-import { useAuth } from '../contexts/AuthContext';
+import '../../styles/form.scss';
+import { useAuth } from '../../contexts/AuthContext';
 import toast from 'react-hot-toast';
 const initValues = {
   email: '',
   password: '',
+  confirmPassword: '',
 };
 
-const Login = () => {
-  const { login } = useAuth();
+const Signup = () => {
+  const { signup } = useAuth();
   const [values, setValues] = useState(initValues);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,22 +29,25 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (values.password !== values.confirmPassword) {
+      return toast.error('Passwords do not match.');
+    }
     try {
       setError('');
       setLoading(true);
-      await login(values.email, values.password);
+      await signup(values.email, values.password);
       setValues(initValues);
-      toast.success('Logged in successfully!');
       history.push('/gallery');
+      toast.success('Account created successfully!');
     } catch {
-      setError('Failed to log in.');
+      setError('Failed to create an account');
     }
     setLoading(false);
   };
 
   return (
     <div className='signup'>
-      <h2>Log In</h2>
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div className='input-group'>
           <label htmlFor='email'>Email</label>
@@ -65,15 +69,28 @@ const Login = () => {
             onChange={handleChange}
           />
         </div>
+        <div className='input-group'>
+          <label htmlFor='confirm-password'>Password</label>
+          <input
+            type='password'
+            name='confirmPassword'
+            value={values.confirmPassword}
+            required
+            onChange={handleChange}
+          />
+        </div>
         <button className='btn-submit' type='submit' disabled={loading}>
-          Log in
+          Sign Up
         </button>
       </form>
       <div className='form-link'>
-        Need an account? <Link to='/signup'>Sign Up</Link>
+        Already have an account? <Link to='/login'>Log in</Link>
+      </div>
+      <div className='form-link'>
+        <Link to='/'>Home</Link>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

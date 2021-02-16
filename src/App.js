@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import Modal from './comps/Modal';
 import { Toaster } from 'react-hot-toast';
 import Home from './pages/Home';
-import Signup from './comps/Signup';
-import Login from './comps/Login';
+import Signup from './comps/auth/Signup';
+import Login from './comps/auth/Login';
 import Gallery from './pages/Gallery';
 import { AuthProvider } from './contexts/AuthContext';
+import Profile from './comps/auth/Profile';
+import PrivateRoute from './comps/auth/PrivateRoute';
+import ForgotPassword from './comps/auth/ForgotPassword';
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -23,8 +25,10 @@ function App() {
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/signup' component={Signup} />
-            <Route exact path='/login' component={Login} />
+            <PrivateRoute path='/profile' component={Profile} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/login' component={Login} />
+            <Route path='/forgot-password' component={ForgotPassword} />
             <Route path='/gallery'>
               <Gallery
                 handleEdit={handleEdit}
