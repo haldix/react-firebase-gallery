@@ -7,9 +7,8 @@ import Login from './comps/auth/Login';
 import Gallery from './pages/Gallery';
 import { AuthProvider } from './contexts/AuthContext';
 import Profile from './comps/auth/Profile';
-import PrivateRoute from './comps/auth/PrivateRoute';
 import ForgotPassword from './comps/auth/ForgotPassword';
-import PrivRoute from './comps/auth/PrivRoute';
+import PrivateRoute from './comps/auth/PrivateRoute';
 
 function App() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -29,7 +28,7 @@ function App() {
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />
             <Route path='/forgot-password' component={ForgotPassword} />
-            <PrivRoute
+            <PrivateRoute
               path='/gallery'
               handleEdit={handleEdit}
               edit={edit}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { NavLink, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import '../styles/navbar.scss';
+import '../styles/Navbar.scss';
 
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
