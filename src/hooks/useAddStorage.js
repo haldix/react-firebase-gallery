@@ -5,15 +5,17 @@ import {
   timestamp,
 } from '../firebase/config';
 import toast from 'react-hot-toast';
+import { useAuth } from '../contexts/AuthContext';
 
-const useAddStorage = (file) => {
+const useAddStorage = (file, collection) => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const storageRef = projectStorage.ref(file.name);
-    const collectionRef = projectFirestore.collection('images');
+    const collectionRef = projectFirestore.collection(collection);
 
     storageRef.put(file).on(
       'state_changed',
@@ -38,7 +40,7 @@ const useAddStorage = (file) => {
         }
       }
     );
-  }, [file]);
+  }, [file, currentUser]);
 
   return { progress, url, error };
 };

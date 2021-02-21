@@ -3,10 +3,17 @@ import useSubFirestore from '../hooks/useSubFirestore';
 import useDelStorage from '../hooks/useDelStorage';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { useAuth } from '../contexts/AuthContext';
 
 const ImageGrid = ({ edit, setSelectedImg }) => {
-  const { docs } = useSubFirestore('images');
-  const [handleDelete, error] = useDelStorage();
+  const { currentUser } = useAuth();
+  const [handleDelete, error] = useDelStorage(
+    `users/${currentUser.uid}/images`
+  );
+
+  const { docs } = useSubFirestore(`users/${currentUser.uid}/images`);
+
+  // TODO:
   if (error) {
     toast.error(error);
   }
