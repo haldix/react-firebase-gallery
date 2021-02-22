@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ImageGrid from '../comps/ImageGrid';
 import Modal from '../comps/Modal';
 import Navbar from '../comps/Navbar';
 import UploadForm from '../comps/UploadForm';
 
-const Gallery = ({ handleEdit, edit, selectedImg, setSelectedImg }) => {
+const Gallery = () => {
+  const [selectedImg, setSelectedImg] = useState(null);
+  const [edit, setEdit] = useState(false);
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    setEdit(!edit);
+  };
+
   return (
     <div>
       <Navbar />
