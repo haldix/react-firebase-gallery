@@ -40,7 +40,7 @@ const useAddStorage = (file, collection) => {
         }
       }
     );
-  }, [file, currentUser]);
+  }, [file, currentUser, collection]);
 
   return { progress, url, error };
 };
