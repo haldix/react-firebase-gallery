@@ -10,7 +10,7 @@ const useDelStorage = (collection) => {
     try {
       await projectFirestore.collection(collection).doc(doc.id).delete();
 
-      const storageRef = projectStorage.ref(doc.fileName);
+      const storageRef = projectStorage.ref(`images/${doc.fileName}`);
       await storageRef.delete();
 
       toast.success(`Image ${doc.fileName} deleted from Gallery.`);

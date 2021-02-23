@@ -14,7 +14,7 @@ const useAddStorage = (file, collection) => {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    const storageRef = projectStorage.ref(file.name);
+    const storageRef = projectStorage.ref(`images/${file.name}`);
     const collectionRef = projectFirestore.collection(collection);
 
     storageRef.put(file).on(
@@ -31,8 +31,8 @@ const useAddStorage = (file, collection) => {
           const url = await storageRef.getDownloadURL();
           const createdAt = timestamp();
 
-          // TODO: somehting
           await collectionRef.add({ url, createdAt, fileName: file.name });
+          console.log('URL', url);
           setUrl(url);
           toast.success(`Image ${file.name} added to Gallery!`);
         } catch (err) {

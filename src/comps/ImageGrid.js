@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useSubFirestore from '../hooks/useSubFirestore';
 import useDelStorage from '../hooks/useDelStorage';
 import { motion } from 'framer-motion';
@@ -11,12 +11,18 @@ const ImageGrid = ({ edit, setSelectedImg }) => {
     `users/${currentUser.uid}/images`
   );
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   const { docs } = useSubFirestore(`users/${currentUser.uid}/images`);
 
-  // TODO:
-  if (error) {
-    toast.error(error);
-  }
+  const handleSelectedImg = (doc) => {
+    if (edit) return;
+    setSelectedImg(doc.url);
+  };
 
   return (
     <div className='img-grid'>
@@ -27,7 +33,7 @@ const ImageGrid = ({ edit, setSelectedImg }) => {
             key={doc.id}
             layout
             whileHover={{ opacity: 1 }}
-            onClick={() => setSelectedImg(doc.url)}
+            onClick={() => handleSelectedImg(doc)}
           >
             <motion.img
               src={doc.url}

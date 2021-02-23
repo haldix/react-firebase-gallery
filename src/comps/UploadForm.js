@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProgressBar from './ProgressBar';
 
-const UploadForm = ({ handleEdit }) => {
+const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
 
@@ -27,11 +27,7 @@ const UploadForm = ({ handleEdit }) => {
             <input type='file' onChange={handleChange} />
             <span>+</span>
           </label>
-          <button className='btn-edit' type='button' onClick={handleEdit}>
-            Edit Gallery
-          </button>
         </div>
-
         <div className='output'>
           {error && <div className='error'>{error}</div>}
           {file && <div>{file.name}</div>}
